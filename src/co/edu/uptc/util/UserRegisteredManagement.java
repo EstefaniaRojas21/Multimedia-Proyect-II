@@ -89,8 +89,6 @@ public class UserRegisteredManagement {
             String userString = (String) uo.get("user");
             String password = (String) uo.get("password");
 
-            
-
             JSONArray playLists = (JSONArray) uo.get("playLists");
             // PLayList--Sumn coulda went wrong
             ArrayList<PlayList> playListArray = new ArrayList<>();
@@ -173,10 +171,9 @@ public class UserRegisteredManagement {
                 playListArray.add(p);
             }
 
-            
             UserRegistered ur = new UserRegistered(firstName, lastName, (int) id, userString, password);
             JSONObject sub = (JSONObject) uo.get("subscription");
-            if(sub != null){
+            if (sub != null) {
                 long durationSub = (long) sub.get("duration");
                 String nameSub = (String) sub.get("name");
                 String descriptionSub = (String) sub.get("description");
@@ -184,10 +181,11 @@ public class UserRegisteredManagement {
                 long startTimeSub = (long) sub.get("startTime");
                 long endTimeSub = (long) sub.get("endTime");
 
-                UserSubscription userSub = new UserSubscription(nameSub, (int) durationSub, descriptionSub, priceSub, startTimeSub, endTimeSub);
+                UserSubscription userSub = new UserSubscription(namesSub, (int) durationSub, descriptionSub, priceSub,
+                        startTimeSub, endTimeSub);
                 ur.setSub(userSub);
             }
-            
+
             ur.setplayList(playListArray);
             userArray.add(ur);
         }
@@ -207,9 +205,8 @@ public class UserRegisteredManagement {
             atributes.put("user", user.getUser());
             atributes.put("password", user.getPassword());
 
-            
             JSONObject subAtributes = new JSONObject();
-            if(user.getSub() != null){
+            if (user.getSub() != null) {
                 subAtributes.put("name", user.getSub().getName());
                 subAtributes.put("description", user.getSub().getDescription());
                 subAtributes.put("duration", (long) user.getSub().getDuration());
@@ -218,12 +215,9 @@ public class UserRegisteredManagement {
                 subAtributes.put("endTime", (long) user.getSub().getEndTime());
 
                 atributes.put("subscription", subAtributes);
-            }else{
+            } else {
                 atributes.put("subscription", null);
             }
-            
-            
-
 
             JSONArray playLists = new JSONArray();
 
