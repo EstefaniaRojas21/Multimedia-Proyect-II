@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import co.edu.uptc.model.Category;
 import co.edu.uptc.model.Movie;
 import co.edu.uptc.model.Serie;
-import co.edu.uptc.persistence.managerClasses.CategoryManagement;
+import co.edu.uptc.util.CategoryManagement;
 
 
 public class CategoryController{

@@ -9,7 +9,6 @@ public class Category {
 
     
     public Category(String name) {
-
         this.name = name;
         movies = new ArrayList<>();
         series = new ArrayList<>();

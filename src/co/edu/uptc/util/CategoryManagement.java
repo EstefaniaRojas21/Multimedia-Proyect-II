@@ -1,247 +1,211 @@
-package co.edu.uptc.persistence.managerClasses;
+package co.edu.uptc.util;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import co.edu.uptc.model.Category;
 import co.edu.uptc.model.Movie;
 import co.edu.uptc.model.MultimediaContent;
 import co.edu.uptc.model.Season;
 import co.edu.uptc.model.Serie;
+import com.google.gson.*;
 
 public class CategoryManagement {
-    @SuppressWarnings("unchecked")
     public void addCategory(Category category) {
 
-        JSONObject atributes = new JSONObject();
+        JsonObject atributes = new JsonObject();
 
-        atributes.put("name", category.getName());
+        atributes.addProperty("name", category.getName());
 
-        JSONArray movies = new JSONArray();
-        JSONArray series = new JSONArray();
+        JsonArray movies = new JsonArray();
+        JsonArray series = new JsonArray();
 
-        atributes.put("movies", movies);
-        atributes.put("series", series);
+        atributes.add("movies", movies);
+        atributes.add("series", series);
 
-        JSONObject categoryObj = new JSONObject();
-        categoryObj.put("category", atributes);
+        JsonObject categoryObj = new JsonObject();
+        categoryObj.add("category", atributes);
 
         // Reads if JSON exists
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(System.getProperty("user.dir")
-                + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\categories.json")) {
-            Object objAux = jsonParser.parse(reader);
-            JSONObject currentJSON = (JSONObject) objAux;
-
-            JSONArray categories = (JSONArray) currentJSON.get("categories");
-
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/categories.json")) {
+            @SuppressWarnings("deprecation")
+            Object objAux = JsonParser.parse(reader);
+            JsonObject currentJSON = (JsonObject) objAux;
+            JsonArray categories = (JsonArray) currentJSON.get("categories");
             categories.add(categoryObj);
-
-            currentJSON.put("categories", categories);
-
-            try (FileWriter file = new FileWriter(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\categories.json")) {
-                file.write(currentJSON.toJSONString());
+            currentJSON.add("categories", categories);
+            try (FileWriter file = new FileWriter("src/main/java/co/edu/uptc/persistence/files/administratorFile/categories.json")) {
+                file.write(new Gson().toJson(currentJSON));
                 file.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void updateCategories(ArrayList<Category> categoriesArray) {
-        JSONArray categories = new JSONArray();
+        JsonArray categories = new JsonArray();
 
         for (Category c : categoriesArray) {
-            JSONObject atributes = new JSONObject();
+            JsonObject atributes = new JsonObject();
 
-            atributes.put("name", c.getName());
+            atributes.addProperty("name", c.getName());
 
-            JSONArray movies = new JSONArray();
+            JsonArray movies = new JsonArray();
 
             for (Movie movieAux : c.getMovies()) {
-                JSONObject movieAtributes = new JSONObject();
-                movieAtributes.put("id", (long) movieAux.getId());
-                movieAtributes.put("duration", (long) movieAux.getDuration());
-                movieAtributes.put("name", movieAux.getName());
-                movieAtributes.put("description", movieAux.getDescription());
-                movieAtributes.put("author", movieAux.getAuthor());
+                JsonObject movieAtributes = new JsonObject();
+                movieAtributes.addProperty("id", (long) movieAux.getId());
+                movieAtributes.addProperty("duration", (long) movieAux.getDuration());
+                movieAtributes.addProperty("name", movieAux.getName());
+                movieAtributes.addProperty("description", movieAux.getDescription());
+                movieAtributes.addProperty("author", movieAux.getAuthor());
 
-                JSONObject movieObj = new JSONObject();
-                movieObj.put("movie", movieAtributes);
+                JsonObject movieObj = new JsonObject();
+                movieObj.add("movie", movieAtributes);
                 movies.add(movieObj);
             }
 
-            JSONArray series = new JSONArray();
+            JsonArray series = new JsonArray();
 
             for (Serie serieAux : c.getSeries()) {
-                JSONObject serieAtributes = new JSONObject();
+                JsonObject serieAtributes = new JsonObject();
 
-                serieAtributes.put("id", serieAux.getId());
-                serieAtributes.put("name", serieAux.getName());
-                serieAtributes.put("author", serieAux.getAuthor());
-                serieAtributes.put("description", serieAux.getDescription());
+                serieAtributes.addProperty("id", serieAux.getId());
+                serieAtributes.addProperty("name", serieAux.getName());
+                serieAtributes.addProperty("author", serieAux.getAuthor());
+                serieAtributes.addProperty("description", serieAux.getDescription());
 
-                JSONArray seasonsList = new JSONArray();
+                JsonArray seasonsList = new JsonArray();
 
                 for (Season i : serieAux.getSeasons()) {
-                    JSONArray chapterList = new JSONArray();
+                    JsonArray chapterList = new JsonArray();
 
-                    JSONObject seasonAtributes = new JSONObject();
-                    seasonAtributes.put("seasonName", i.getSeasonName());
+                    JsonObject seasonAtributes = new JsonObject();
+                    seasonAtributes.addProperty("seasonName", i.getSeasonName());
 
                     for (MultimediaContent m : i.getSeasonMultimediaContent()) {
-                        JSONObject chapterAtributes = new JSONObject();
-                        chapterAtributes.put("duration", (long) m.getDuration());
-                        chapterAtributes.put("name", m.getName());
-                        chapterAtributes.put("description", m.getDescription());
+                        JsonObject chapterAtributes = new JsonObject();
+                        chapterAtributes.addProperty("duration", (long) m.getDuration());
+                        chapterAtributes.addProperty("name", m.getName());
+                        chapterAtributes.addProperty("description", m.getDescription());
 
-                        JSONObject chapterObject = new JSONObject();
-                        chapterObject.put("chapter", chapterAtributes);
+                        JsonObject chapterObject = new JsonObject();
+                        chapterObject.add("chapter", chapterAtributes);
                         chapterList.add(chapterObject);
                     }
 
-                    seasonAtributes.put("chapters", chapterList);
-                    JSONObject seasonObject = new JSONObject();
-                    seasonObject.put("season", seasonAtributes);
+                    seasonAtributes.add("chapters", chapterList);
+                    JsonObject seasonObject = new JsonObject();
+                    seasonObject.add("season", seasonAtributes);
                     seasonsList.add(seasonObject);
                 }
 
-                serieAtributes.put("seasons", seasonsList);
-                JSONObject serieObj = new JSONObject();
-                serieObj.put("serie", serieAtributes);
+                serieAtributes.add("seasons", seasonsList);
+                JsonObject serieObj = new JsonObject();
+                serieObj.add("serie", serieAtributes);
                 series.add(serieObj);
             }
 
-            atributes.put("movies", movies);
-            atributes.put("series", series);
+            atributes.add("movies", movies);
+            atributes.add("series", series);
 
-            JSONObject categoryObj = new JSONObject();
-            categoryObj.put("category", atributes);
+            JsonObject categoryObj = new JsonObject();
+            categoryObj.add("category", atributes);
             categories.add(categoryObj);
 
         }
 
         // Reads if JSON exists
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(System.getProperty("user.dir")
-                + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\categories.json")) {
-            Object objAux = jsonParser.parse(reader);
-            JSONObject currentJSON = (JSONObject) objAux;
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/categories.json")) {
+            @SuppressWarnings("deprecation")
+            Object objAux = JsonParser.parse(reader);
+            JsonObject currentJSON = (JsonObject) objAux;
 
-            currentJSON.put("categories", categories);
+            currentJSON.add("categories", categories);
 
-            try (FileWriter file = new FileWriter(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\categories.json")) {
-                file.write(currentJSON.toJSONString());
+            try (FileWriter file = new FileWriter("src/main/java/co/edu/uptc/persistence/files/administratorFile/categories.json")) {
+                file.write(new Gson().toJson(currentJSON));
                 file.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
 
     }
 
     public ArrayList<Category> getCategories() {
         ArrayList<Category> categoriesArray = new ArrayList<>();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        JsonObject JsonObject = new JsonObject();
 
-        try (FileReader reader = new FileReader(System.getProperty("user.dir")
-                + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\categories.json")) {
-            Object obj = jsonParser.parse(reader);
-            jsonObject = (JSONObject) obj;
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/categories.json")) {
+            @SuppressWarnings("deprecation")
+            Object obj = JsonParser.parse(reader);
+            JsonObject = (JsonObject) obj;
 
         } catch (Exception e) {
             System.out.println("Sumn went wrong");
         }
 
-        JSONArray categories = (JSONArray) jsonObject.get("categories");
-        for (Object c : categories) {
-            JSONObject category = (JSONObject) c;
-
-            JSONObject catObj = (JSONObject) category.get("category");
-
-            String name = (String) catObj.get("name");
-
-            JSONArray movies = (JSONArray) catObj.get("movies");
-
+        JsonArray categories = (JsonArray) JsonObject.get("categories");
+        for (JsonElement c : categories) {
+            JsonObject catObj = c.getAsJsonObject().get("category").getAsJsonObject();
+            String name = catObj.get("name").getAsString();
+            JsonArray movies = catObj.get("movies").getAsJsonArray();
             ArrayList<Movie> moviesArray = new ArrayList<>();
 
             // Movies
-            for (Object movie : movies) {
-                JSONObject movieObj = (JSONObject) movie;
-
-                JSONObject movieObjAux = (JSONObject) movieObj.get("movie");
-
-                long idMovie = (long) movieObjAux.get("id");
-                long durationMovie = (long) movieObjAux.get("duration");
-                String nameMovie = (String) movieObjAux.get("name");
-                String authorMovie = (String) movieObjAux.get("author");
-                String descriptionMovie = (String) movieObjAux.get("description");
-                Movie m = new Movie((int) idMovie, nameMovie, authorMovie, descriptionMovie, (int) durationMovie);
-                moviesArray.add(m);
+            for (JsonElement movie : movies) {
+                JsonObject movieObjAux = movie.getAsJsonObject().get("movie").getAsJsonObject();
+                int idMovie =  movieObjAux.get("id").getAsInt();
+                int durationMovie = movieObjAux.get("duration").getAsInt();
+                String nameMovie = movieObjAux.get("name").getAsString();
+                String authorMovie = movieObjAux.get("author").getAsString();
+                String descriptionMovie = movieObjAux.get("description").getAsString();
+                moviesArray.add(new Movie(idMovie, nameMovie, authorMovie, descriptionMovie, durationMovie));
             }
 
             ArrayList<Serie> seriesArray = new ArrayList<>();
-            JSONArray series = (JSONArray) catObj.get("series");
-            for (Object serie : series) {
-                JSONObject serieObject = (JSONObject) serie;
-
-                JSONObject serieObjectAux = (JSONObject) serieObject.get("serie");
-
-                JSONArray seasonsList = (JSONArray) serieObjectAux.get("seasons");
+            JsonArray series = (JsonArray) catObj.get("series");
+            for (JsonElement serie : series) {
+                JsonObject serieObjectAux = serie.getAsJsonObject().get("serie").getAsJsonObject();
+                JsonArray seasonsList = (JsonArray) serieObjectAux.get("seasons");
                 ArrayList<Season> seasons = new ArrayList<>();
-
-                for (Object season : seasonsList) {
-                    JSONObject seasonObject = (JSONObject) season;
-
-                    JSONObject seasonObjectAux = (JSONObject) seasonObject.get("season");
-
-                    JSONArray chaptersList = (JSONArray) seasonObjectAux.get("chapters");
+                for (JsonElement season : seasonsList) {
+                    JsonObject seasonObjectAux = season.getAsJsonObject().get("season").getAsJsonObject();
+                    JsonArray chaptersList = (JsonArray) seasonObjectAux.get("chapters");
                     ArrayList<MultimediaContent> chapters = new ArrayList<>();
 
-                    for (Object chapter : chaptersList) {
-                        JSONObject chapterObject = (JSONObject) chapter;
-
-                        JSONObject chapterObjectAux = (JSONObject) chapterObject.get("chapter");
-
-                        long durationChap = (long) chapterObjectAux.get("duration");
-                        String nameChap = (String) chapterObjectAux.get("name");
-                        String descriptionChap = (String) chapterObjectAux.get("description");
-
-                        MultimediaContent newChap = new MultimediaContent((int) durationChap, nameChap,
-                                descriptionChap);
-                        chapters.add(newChap);
+                    for (JsonElement chapter : chaptersList) {
+                        JsonObject chapterObjectAux = chapter.getAsJsonObject().get("chapter").getAsJsonObject();
+                        int durationChap = chapterObjectAux.get("duration").getAsInt();
+                        String nameChap = chapterObjectAux.get("name").getAsString();
+                        String descriptionChap = chapterObjectAux.get("description").getAsString();
+                        chapters.add(new MultimediaContent(durationChap, nameChap,descriptionChap));
                     }
-
-                    String nameSea = (String) seasonObjectAux.get("seasonName");
-
-                    Season newSeason = new Season(nameSea, chapters);
-
-                    seasons.add(newSeason);
+                    String nameSea = seasonObjectAux.get("seasonName").getAsString();
+                    seasons.add(new Season(nameSea, chapters));
                 }
 
-                long idSerie = (long) serieObjectAux.get("id");
-                String nameSerie = (String) serieObjectAux.get("name");
-                String authorSerie = (String) serieObjectAux.get("author");
-                String descriptionSerie = (String) serieObjectAux.get("description");
-
-                Serie newSerie = new Serie((int) idSerie, nameSerie, authorSerie, descriptionSerie, seasons);
-                seriesArray.add(newSerie);
+                int idSerie = serieObjectAux.get("id").getAsInt();
+                String nameSerie = serieObjectAux.get("name").getAsString();
+                String authorSerie = serieObjectAux.get("author").getAsString();
+                String descriptionSerie = serieObjectAux.get("description").getAsString();
+                seriesArray.add(new Serie(idSerie, nameSerie, authorSerie, descriptionSerie, seasons));
 
             }
 

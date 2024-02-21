@@ -9,7 +9,8 @@ import co.edu.uptc.model.PlayList;
 import co.edu.uptc.model.Season;
 import co.edu.uptc.model.Serie;
 import co.edu.uptc.model.UserRegistered;
-import co.edu.uptc.persistence.managerClasses.UserRegisteredManagement;
+import co.edu.uptc.util.UserRegisteredManagement;
+
 
 public class PlayListController{
     private UserRegisteredManagement um = new UserRegisteredManagement();

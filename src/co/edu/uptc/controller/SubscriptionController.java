@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import co.edu.uptc.model.Subscription;
 import co.edu.uptc.model.UserRegistered;
 import co.edu.uptc.model.UserSubscription;
-import co.edu.uptc.persistence.managerClasses.SubscriptionsManagement;
+import co.edu.uptc.util.SubscriptionsManagement;
+
 
 public class SubscriptionController {
     private SubscriptionsManagement sm = new SubscriptionsManagement();

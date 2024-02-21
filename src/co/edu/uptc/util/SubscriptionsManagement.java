@@ -1,162 +1,153 @@
-package co.edu.uptc.persistence.managerClasses;
+package co.edu.uptc.util;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import co.edu.uptc.model.Subscription;
+import com.google.gson.*;
 
 public class SubscriptionsManagement {
 
-    @SuppressWarnings("unchecked")
     public void addSubscription(Subscription sub) {
 
-        JSONObject atributes = new JSONObject();
+        JsonObject atributes = new JsonObject();
 
-        atributes.put("name", sub.getName());
-        atributes.put("description", sub.getDescription());
-        atributes.put("price",(double) sub.getPrice());
-        atributes.put("duration", sub.getDuration());
+        atributes.addProperty("name", sub.getName());
+        atributes.addProperty("description", sub.getDescription());
+        atributes.addProperty("price",(double) sub.getPrice());
+        atributes.addProperty("duration", sub.getDuration());
 
-        JSONObject subObject = new JSONObject();
-        subObject.put("subscription", atributes);
+        JsonObject subObject = new JsonObject();
+        subObject.add("subscription", atributes);
 
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-            Object objAux = jsonParser.parse(reader);
-            JSONObject currentJSON = (JSONObject) objAux;
-
-            JSONArray subscriptionsList = (JSONArray) currentJSON.get("subscriptions");
-
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+            @SuppressWarnings("deprecation")
+            Object objAux = JsonParser.parse(reader);
+            JsonObject currentJSON = (JsonObject) objAux;
+            JsonArray subscriptionsList = (JsonArray) currentJSON.get("subscriptions");
             subscriptionsList.add(subObject);
-
-            currentJSON.put("subscriptions", subscriptionsList);
-
-            try (FileWriter file = new FileWriter(System.getProperty("user.dir") + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-                file.write(currentJSON.toJSONString());
+            currentJSON.add("subscriptions", subscriptionsList);
+            try (FileWriter file = new FileWriter("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+                file.write(new Gson().toJson(currentJSON));
                 file.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
     public ArrayList<Subscription> getSubscriptions() {
         ArrayList<Subscription> subsArray = new ArrayList<>();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        JsonObject JsonObject = new JsonObject();
 
-        try (FileReader reader = new FileReader(System.getProperty("user.dir")+ "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-            Object obj = jsonParser.parse(reader);
-            jsonObject = (JSONObject) obj;
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+            @SuppressWarnings("deprecation")
+            Object obj = JsonParser.parse(reader);
+            JsonObject = (JsonObject) obj;
 
         } catch (Exception e) {
             System.out.println("Sumn went wrong");
         }
 
-        JSONArray subs = (JSONArray) jsonObject.get("subscriptions");
-        for (Object sub : subs) {
-            JSONObject s = (JSONObject) sub;
-
-            JSONObject so = (JSONObject) s.get("subscription");
-            long duration = (long) so.get("duration");
-            String name = (String) so.get("name");
-            String description = (String) so.get("description");
-            double price = (double) so.get("price");
-
-            Subscription newSub = new Subscription(name, (int) duration, description, price);
-            subsArray.add(newSub);
+        JsonArray subs = (JsonArray) JsonObject.get("subscriptions");
+        for (JsonElement sub : subs) {
+            JsonObject so = sub.getAsJsonObject().get("subscription").getAsJsonObject();
+            int duration = so.get("duration").getAsInt();
+            String name = so.get("name").getAsString();
+            String description = so.get("description").getAsString();
+            double price = so.get("price").getAsDouble();
+            subsArray.add(new Subscription(name, duration, description, price));
         }
         return subsArray;
     }
 
-    @SuppressWarnings("unchecked")
     public void updateSubscription(Subscription subToUpdate, Subscription subUpdated) {
-        JSONObject atributessubToUpdate = new JSONObject();
+        JsonObject atributessubToUpdate = new JsonObject();
+        atributessubToUpdate.addProperty("duration", subToUpdate.getDuration());
+        atributessubToUpdate.addProperty("name", subToUpdate.getName());
+        atributessubToUpdate.addProperty("description", subToUpdate.getDescription());
+        atributessubToUpdate.addProperty("price", subToUpdate.getPrice());
 
-        atributessubToUpdate.put("duration", (long) subToUpdate.getDuration());
-        atributessubToUpdate.put("name", subToUpdate.getName());
-        atributessubToUpdate.put("description", subToUpdate.getDescription());
-        atributessubToUpdate.put("price", (double) subToUpdate.getPrice());
+        JsonObject subToUpdateObject = new JsonObject();
+        subToUpdateObject.add("subscription", atributessubToUpdate);
 
-        JSONObject subToUpdateObject = new JSONObject();
-        subToUpdateObject.put("subscription", atributessubToUpdate);
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+            @SuppressWarnings("deprecation")
+            Object objAux = JsonParser.parse(reader);
+            JsonObject currentJSON = (JsonObject) objAux;
 
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-            Object objAux = jsonParser.parse(reader);
-            JSONObject currentJSON = (JSONObject) objAux;
-
-            JSONArray subsList = (JSONArray) currentJSON.get("subscriptions");
+            JsonArray subsList = (JsonArray) currentJSON.get("subscriptions");
             subsList.remove(subToUpdateObject);
 
-            JSONObject subUpdatedAtributes = new JSONObject();
+            JsonObject subUpdatedAtributes = new JsonObject();
 
-            subUpdatedAtributes.put("price",(double) subUpdated.getPrice());
-            subUpdatedAtributes.put("name", subUpdated.getName());
-            subUpdatedAtributes.put("description", subUpdated.getDescription());
-            subUpdatedAtributes.put("duration", subUpdated.getDuration());
-            currentJSON.put("subscriptions", subsList);
+            subUpdatedAtributes.addProperty("price", subUpdated.getPrice());
+            subUpdatedAtributes.addProperty("name", subUpdated.getName());
+            subUpdatedAtributes.addProperty("description", subUpdated.getDescription());
+            subUpdatedAtributes.addProperty("duration", subUpdated.getDuration());
+            currentJSON.add("subscriptions", subsList);
 
-            JSONObject subUpdatedObject = new JSONObject();
-            subUpdatedObject.put("subscription", subUpdatedAtributes);
+            JsonObject subUpdatedObject = new JsonObject();
+            subUpdatedObject.add("subscription", subUpdatedAtributes);
 
             subsList.add(subUpdatedObject);
-            currentJSON.put("subscriptions", subsList);
+            currentJSON.add("subscriptions", subsList);
 
-            try (FileWriter file = new FileWriter(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-                file.write(currentJSON.toJSONString());
+            try (FileWriter file = new FileWriter("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+                file.write(new Gson().toJson(currentJSON));
                 file.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void removeSubscription(Subscription subToRemove){
-        JSONObject atributessubToRemove = new JSONObject();
+        JsonObject atributessubToRemove = new JsonObject();
 
-        atributessubToRemove.put("duration", (long) subToRemove.getDuration());
-        atributessubToRemove.put("name", subToRemove.getName());
-        atributessubToRemove.put("description", subToRemove.getDescription());
-        atributessubToRemove.put("price", (double) subToRemove.getPrice());
+        atributessubToRemove.addProperty("duration", (long) subToRemove.getDuration());
+        atributessubToRemove.addProperty("name", subToRemove.getName());
+        atributessubToRemove.addProperty("description", subToRemove.getDescription());
+        atributessubToRemove.addProperty("price", subToRemove.getPrice());
 
-        JSONObject subToRemoveObject = new JSONObject();
-        subToRemoveObject.put("subscription", atributessubToRemove);
+        JsonObject subToRemoveObject = new JsonObject();
+        subToRemoveObject.add("subscription", atributessubToRemove);
 
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-            Object objAux = jsonParser.parse(reader);
-            JSONObject currentJSON = (JSONObject) objAux;
+        @SuppressWarnings("deprecation")
+        JsonParser JsonParser = new JsonParser();
+        try (FileReader reader = new FileReader("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+            @SuppressWarnings("deprecation")
+            Object objAux = JsonParser.parse(reader);
+            JsonObject currentJSON = (JsonObject) objAux;
 
-            JSONArray subsList = (JSONArray) currentJSON.get("subscriptions");
+            JsonArray subsList = (JsonArray) currentJSON.get("subscriptions");
             subsList.remove(subToRemoveObject);
 
-            currentJSON.put("subscriptions", subsList);
+            currentJSON.add("subscriptions", subsList);
 
-            try (FileWriter file = new FileWriter(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\administratorFile\\subscriptions.json")) {
-                file.write(currentJSON.toJSONString());
+            try (FileWriter file = new FileWriter("src/main/java/co/edu/uptc/persistence/files/administratorFile/subscriptions.json")) {
+                file.write(new Gson().toJson(currentJSON));
                 file.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 }

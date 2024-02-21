@@ -1,58 +1,37 @@
 package co.edu.uptc.run;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
+import co.edu.uptc.controller.*;
+import co.edu.uptc.model.*;
+import co.edu.uptc.util.CategoryManagement;
+import co.edu.uptc.util.MoviesManagement;
+import co.edu.uptc.util.SeriesManagement;
+import co.edu.uptc.util.UserRegisteredManagement;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-
-import co.edu.uptc.model.Admin;
-import co.edu.uptc.model.Category;
-import co.edu.uptc.model.Serie;
-import co.edu.uptc.model.Subscription;
-import co.edu.uptc.model.UserRegistered;
-import co.edu.uptc.persistence.managerClasses.CategoryManagement;
-import co.edu.uptc.persistence.managerClasses.MoviesManagement;
-import co.edu.uptc.persistence.managerClasses.SeriesManagement;
-import co.edu.uptc.persistence.managerClasses.UserRegisteredManagement;
-import co.edu.uptc.model.Movie;
-import co.edu.uptc.model.MultimediaContent;
-import co.edu.uptc.model.PlayList;
-import co.edu.uptc.controller.AdminController;
-import co.edu.uptc.controller.CategoryController;
-import co.edu.uptc.controller.PlayListController;
-import co.edu.uptc.controller.SubscriptionController;
-import co.edu.uptc.controller.UserRegisteredController;
+import java.time.format.DateTimeFormatter;
 
 public class AppMenus {
-    private String[] adds = { "IF U ARE RICH AF, BUY THE NEW CIBERTRUK A$AP",
+    private String[] adds = {"IF U ARE RICH AF, BUY THE NEW CIBERTRUK A$AP",
             "BUY THE NEW TESLA!!!! SAVE THE WORLD AGAISN POLLUTION",
             "IF U HAVE OPP BURN 'EM!!! SPECIAL OFFERTS",
             "IF U ARE TOXIC, LETS CREATE AN ACCOUNT IN X!!!",
-            "YOUR MONEY IS SAVE WITH PAYPAL" };
+            "YOUR MONEY IS SAVE WITH PAYPAL"};
     private Icon[] addsPics = {
-            new ImageIcon(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\pics\\add1.png"),
-            new ImageIcon(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\pics\\add2.png"),
-            new ImageIcon(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\pics\\add3.png"),
-            new ImageIcon(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\pics\\add4.png"),
-            new ImageIcon(System.getProperty("user.dir")
-                    + "\\MULTIMEDIA PROJECT\\src\\co\\edu\\uptc\\persistence\\files\\pics\\add5.png") };
+            new ImageIcon("src/main/java/co/edu/uptc/persistence/files/pics/add1.png"),
+            new ImageIcon("src/main/java/co/edu/uptc/persistence/files/pics/add2.png"),
+            new ImageIcon("src/main/java/co/edu/uptc/persistence/files/pics/add3.png"),
+            new ImageIcon("src/main/java/co/edu/uptc/persistence/files/pics/add4.png"),
+            new ImageIcon("src/main/java/co/edu/uptc/persistence/files/pics/add5.png")
+    };
 
     private Admin admin = new Admin("Elon", "Musk", 1, "Elon1@uptc.admin.co", "1");
     private UserRegisteredManagement um = new UserRegisteredManagement();
@@ -91,9 +70,9 @@ public class AppMenus {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel("Welcome to NextFlix"), BorderLayout.NORTH);
         panel.add(new JLabel(principalMenuIcon), BorderLayout.CENTER);
-        op = JOptionPane.showOptionDialog(null, panel, "Principal Menu", JOptionPane.PLAIN_MESSAGE,
+        op = JOptionPane.showOptionDialog(null, panel, "Principal Menu", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
-                null, new Object[] { "LogIn", "Register", "Visitant", "Leave" }, null);
+                null, new Object[]{"LogIn", "Register", "Visitant", "Leave"}, null);
         switch (op) {
             case 0:
                 op = 1;
@@ -124,9 +103,9 @@ public class AppMenus {
         panelLogIn.add(password);
 
         while (true) {
-            op = JOptionPane.showOptionDialog(null, panelLogIn, "LogIn Menu", JOptionPane.PLAIN_MESSAGE,
+            op = JOptionPane.showOptionDialog(null, panelLogIn, "LogIn Menu", JOptionPane.DEFAULT_OPTION,
                     JOptionPane.PLAIN_MESSAGE, null,
-                    new Object[] { "LogIn", "Return" }, null);
+                    new Object[]{"LogIn", "Return"}, null);
 
             if (op == 0) {
                 if (admin.couldLogIn(user.getText(), password.getText())) {
@@ -182,7 +161,7 @@ public class AppMenus {
         while (true) {
 
             op = JOptionPane.showOptionDialog(null, panelRegister, "Register Menu", JOptionPane.PLAIN_MESSAGE,
-                    JOptionPane.PLAIN_MESSAGE, null, new Object[] { "Register", "Return" }, null);
+                    JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Register", "Return"}, null);
 
             if (op == 0) {
 
@@ -275,7 +254,7 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] { "See movie information", "See serie information", "Create Account", "return" },
+                    new Object[]{"See movie information", "See serie information", "Create Account", "return"},
                     null);
             if (op == 0) {
                 if (movies.length > 0) {
@@ -308,7 +287,7 @@ public class AppMenus {
 
                         op = JOptionPane.showOptionDialog(null, seasonsPanel, "Season Away Menu",
                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
-                                new Object[] { "See Season", "return" }, seasonsPanel);
+                                new Object[]{"See Season", "return"}, seasonsPanel);
 
                         if (((String) (seasonNamesBox.getSelectedItem()) != null) && op == 0) {
                             while (true) {
@@ -329,17 +308,17 @@ public class AppMenus {
 
                                 op = JOptionPane.showOptionDialog(null, chapPanel, "Chapter Away Menu",
                                         JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
-                                        new Object[] { "See Chapter", "return" }, null);
+                                        new Object[]{"See Chapter", "return"}, null);
                                 if ((((String) (chapNamesBox.getSelectedItem())) != null) && op == 0) {
                                     JOptionPane.showMessageDialog(null,
                                             "Name: " + (String) (chapNamesBox.getSelectedItem()) +
                                                     "\nDescription: " + ac.chapterForAwayMenu(Integer.parseInt(aux[1]),
-                                                            (String) (seasonNamesBox.getSelectedItem()),
-                                                            (String) (chapNamesBox.getSelectedItem())).getDescription()
+                                                    (String) (seasonNamesBox.getSelectedItem()),
+                                                    (String) (chapNamesBox.getSelectedItem())).getDescription()
                                                     +
                                                     "\nDuration: " + ac.chapterForAwayMenu(Integer.parseInt(aux[1]),
-                                                            (String) (seasonNamesBox.getSelectedItem()),
-                                                            (String) (chapNamesBox.getSelectedItem())).getDuration());
+                                                    (String) (seasonNamesBox.getSelectedItem()),
+                                                    (String) (chapNamesBox.getSelectedItem())).getDuration());
                                     return 3;
                                 } else {
                                     break;
@@ -372,8 +351,8 @@ public class AppMenus {
         op = JOptionPane.showOptionDialog(null, panel, "Admin Menu", JOptionPane.PLAIN_MESSAGE,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
-                new Object[] { "Movies Management", "Series Management", "Category Management",
-                        "Subscriptions Management", "return" },
+                new Object[]{"Movies Management", "Series Management", "Category Management",
+                        "Subscriptions Management", "return"},
                 null);
         switch (op) {
             case 0:
@@ -400,7 +379,7 @@ public class AppMenus {
     public int moviesManagementMenu(int op) {
         op = JOptionPane.showOptionDialog(null, "Choose an action for the movie.", "Movies Menu",
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                null, new Object[] { "See", "Create", "Update", "Remove", "Return" }, null);
+                null, new Object[]{"See", "Create", "Update", "Remove", "Return"}, null);
         switch (op) {
             case 0:
                 op = 6;
@@ -628,7 +607,7 @@ public class AppMenus {
                                 }
 
                             }
-                        } 
+                        }
                     } else {
                         break;
                     }
@@ -699,7 +678,7 @@ public class AppMenus {
     public int SeriesManagementMenu(int op) {
         op = JOptionPane.showOptionDialog(null, "Choose an option to do with a serie", "Admin Menu",
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                null, new Object[] { "See Serie", "Create Serie", "Update Serie", "Remove Serie", "Return" }, null);
+                null, new Object[]{"See Serie", "Create Serie", "Update Serie", "Remove Serie", "Return"}, null);
         switch (op) {
             case 0:
                 op = 12;
@@ -998,8 +977,8 @@ public class AppMenus {
         panel.add(new JLabel(userMenu), BorderLayout.CENTER);
         op = JOptionPane.showOptionDialog(null, panel,
                 "Registered Menu", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                null, new Object[] { "Movies", "Series", "PlayList Management", "Categories", "Suscriptions",
-                        "Return" },
+                null, new Object[]{"Movies", "Series", "PlayList Management", "Categories", "Suscriptions",
+                        "Return"},
                 null);
 
         LocalTime currentLocalTime = LocalTime.now(ZoneId.of("America/Bogota"));
@@ -1068,7 +1047,7 @@ public class AppMenus {
                             "\nDescription: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getDescription() +
                             "\nAuthor: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getAuthor(),
                     "See Movie From PlayList Menu", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                    null, new Object[] { "Play Movie", "choose other movie", "Return" },
+                    null, new Object[]{"Play Movie", "choose other movie", "Return"},
                     null);
 
             if (op == 0) {
@@ -1136,7 +1115,7 @@ public class AppMenus {
                 op = JOptionPane.showOptionDialog(null, "Movie played!", null, JOptionPane.PLAIN_MESSAGE,
                         JOptionPane.PLAIN_MESSAGE,
                         null,
-                        new Object[] { "Choose other movie", "Return" },
+                        new Object[]{"Choose other movie", "Return"},
                         null);
                 if (op == 1) {
                     return 20;
@@ -1175,7 +1154,7 @@ public class AppMenus {
                             "\nDescription: " + userRegisteredC.getSerie(Integer.parseInt(aux[1])).getDescription() +
                             "\nAuthor: " + userRegisteredC.getSerie(Integer.parseInt(aux[1])).getAuthor(),
                     "See Movie ", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                    null, new Object[] { "See Seasons", "choose other serie", "Return" },
+                    null, new Object[]{"See Seasons", "choose other serie", "Return"},
                     null);
 
             if (op == 0) {
@@ -1201,17 +1180,17 @@ public class AppMenus {
                             break;
                         }
                         op = JOptionPane.showOptionDialog(null, "Chapter name: " + chapterName +
-                                "\nDuration: "
-                                + userRegisteredC.getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
+                                        "\nDuration: "
+                                        + userRegisteredC.getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                         .getDuration()
-                                + "\nDescription: "
-                                + userRegisteredC.getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
+                                        + "\nDescription: "
+                                        + userRegisteredC.getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                         .getDescription(),
                                 "See Movie ", JOptionPane.PLAIN_MESSAGE,
                                 JOptionPane.PLAIN_MESSAGE,
                                 null,
-                                new Object[] { "Play Chapter", "choose other chapter", "choose other season",
-                                        "choose other serie", "Return" },
+                                new Object[]{"Play Chapter", "choose other chapter", "choose other season",
+                                        "choose other serie", "Return"},
                                 null);
 
                         if (op == 0) {
@@ -1280,8 +1259,8 @@ public class AppMenus {
                             op = JOptionPane.showOptionDialog(null, "chapter played!", null,
                                     JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
                                     null,
-                                    new Object[] { "Play other chapter", "choose other serie", "Choose other season",
-                                            "Return" },
+                                    new Object[]{"Play other chapter", "choose other serie", "Choose other season",
+                                            "Return"},
                                     null);
 
                             if (op == 1) {
@@ -1330,7 +1309,7 @@ public class AppMenus {
                 op2 = JOptionPane.showOptionDialog(null, "Choose an option to do with a serie",
                         "Update serie " + selectedSerieName,
                         JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                        null, new Object[] { "Seasons", "Update Serie", "Return" },
+                        null, new Object[]{"Seasons", "Update Serie", "Return"},
                         null);
 
                 switch (op2) {
@@ -1343,8 +1322,8 @@ public class AppMenus {
                                     "Season menu of the " + selectedSerieName + " serie",
                                     JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
                                     null,
-                                    new Object[] { "See Season", "Create Season", "Update Season", "Remove Season",
-                                            "Return" },
+                                    new Object[]{"See Season", "Create Season", "Update Season", "Remove Season",
+                                            "Return"},
                                     null);
                             switch (op3) {
                                 case 0:
@@ -1367,7 +1346,7 @@ public class AppMenus {
                                                     JOptionPane.PLAIN_MESSAGE,
                                                     null,
                                                     ac.showListChapterNames(Integer.parseInt(names[1]),
-                                                            selectedSeasonName)
+                                                                    selectedSeasonName)
                                                             .toArray(),
                                                     null);
 
@@ -1416,7 +1395,7 @@ public class AppMenus {
                                             String descriptionChapter = descriptionChapterField.getText().trim();
                                             String durationChapter1 = durationChapterField.getText().trim();
 
-                                            if (!seasonName.isBlank()&& seasonName.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$") 
+                                            if (!seasonName.isBlank() && seasonName.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")
                                                     && nameChapter.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")
                                                     && !nameChapter.isBlank()
                                                     && !descriptionChapter.isBlank() && !durationChapter1.isBlank()
@@ -1474,7 +1453,7 @@ public class AppMenus {
                                                                         && ac.validateNumbers(durationChapter3)
                                                                         && ac.validateName(nameChapter2)
                                                                         && ac.validateDescription(
-                                                                                descriptionChapter2)) {
+                                                                        descriptionChapter2)) {
                                                                     int durationChapter2 = Integer
                                                                             .parseInt(durationChapter3);
                                                                     ac.addChapter(nameChapter2, descriptionChapter2,
@@ -1554,7 +1533,7 @@ public class AppMenus {
                                         opUpdateSeason = JOptionPane.showOptionDialog(null,
                                                 "Choose an option to do with a season", "Update season",
                                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                                null, new Object[] { "Chapters", "Update Season", "Return" },
+                                                null, new Object[]{"Chapters", "Update Season", "Return"},
                                                 null);
 
                                         switch (opUpdateSeason) {
@@ -1569,9 +1548,9 @@ public class AppMenus {
                                                             "Admin Menu",
                                                             JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
                                                             null,
-                                                            new Object[] { "See chapters", "Create chapters",
+                                                            new Object[]{"See chapters", "Create chapters",
                                                                     "Update chapters", "Remove chapters",
-                                                                    "Return" },
+                                                                    "Return"},
                                                             null);
                                                     switch (opChapters) {
                                                         case 0:
@@ -1627,13 +1606,13 @@ public class AppMenus {
                                                                             && !durationChapter3.isBlank()
                                                                             && ac.validateName(nameChapter2)
                                                                             && ac.validateDescription(
-                                                                                    descriptionChapter2)
+                                                                            descriptionChapter2)
                                                                             && ac.validateNumbers(durationChapter3)
                                                                             && nameChapter2.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")
                                                                             && ac.validateNameChapter(
-                                                                                    selectedSeasonName,
-                                                                                    Integer.parseInt(names[1]),
-                                                                                    nameChapter2)) {
+                                                                            selectedSeasonName,
+                                                                            Integer.parseInt(names[1]),
+                                                                            nameChapter2)) {
                                                                         int durationChapter2 = Integer
                                                                                 .parseInt(durationChapter3);
                                                                         ac.addChapter(nameChapter2, descriptionChapter2,
@@ -1750,15 +1729,15 @@ public class AppMenus {
                                                                                 && !durationChapter3.isBlank()
                                                                                 && ac.validateName(newName)
                                                                                 && ac.validateDescription(
-                                                                                        newDescription)
+                                                                                newDescription)
                                                                                 && ac.validateNumbers(durationChapter3)
                                                                                 && newName.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")
                                                                                 && (oldName.equals(newName)
-                                                                                        || ac.validateNameChapter(
-                                                                                                selectedSeasonName,
-                                                                                                Integer.parseInt(
-                                                                                                        names[1]),
-                                                                                                newName))) {
+                                                                                || ac.validateNameChapter(
+                                                                                selectedSeasonName,
+                                                                                Integer.parseInt(
+                                                                                        names[1]),
+                                                                                newName))) {
 
                                                                             int durationChapter2 = Integer
                                                                                     .parseInt(durationChapter3);
@@ -1806,9 +1785,9 @@ public class AppMenus {
                                                                                     "Duration invalid");
                                                                         } else if (!oldName.equals(newName)
                                                                                 && !ac.validateNameChapter(
-                                                                                        selectedSeasonName,
-                                                                                        Integer.parseInt(names[1]),
-                                                                                        newName)) {
+                                                                                selectedSeasonName,
+                                                                                Integer.parseInt(names[1]),
+                                                                                newName)) {
                                                                             JOptionPane.showMessageDialog(null,
                                                                                     "invalid name of chapter, the name already exists");
                                                                         }
@@ -1936,8 +1915,8 @@ public class AppMenus {
 
                                                             if (!newSeasonName.isBlank()
                                                                     && (newSeasonName.equals(oldSeasonName)
-                                                                            || ac.validateNameSeason(newSeasonName,
-                                                                                    seriesId))
+                                                                    || ac.validateNameSeason(newSeasonName,
+                                                                    seriesId))
                                                                     && ac.validateName(newSeasonName) && newSeasonName.matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")) {
                                                                 if (ac.modifySeason(newSeasonName, seriesId,
                                                                         selectedSeasonName)) {
@@ -2172,14 +2151,24 @@ public class AppMenus {
         op = JOptionPane.showOptionDialog(null, "Welcome to Subscription Management Menu",
                 "Subscription Management Menu",
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
-                new Object[] { "See", "Create", "Update", "Remove", "Return" }, null);
+                new Object[]{"See", "Create", "Update", "Remove", "Return"}, null);
 
         switch (op) {
-            case 0:op = 26;break;
-            case 1:op = 27;break;
-            case 2:op = 28;break;
-            case 3:op = 29;break;
-            case 4:op = 4;break;
+            case 0:
+                op = 26;
+                break;
+            case 1:
+                op = 27;
+                break;
+            case 2:
+                op = 28;
+                break;
+            case 3:
+                op = 29;
+                break;
+            case 4:
+                op = 4;
+                break;
         }
 
         return op;
@@ -2245,12 +2234,12 @@ public class AppMenus {
                         if (durationField.getText().matches("\\d+")) {
                             if (subsC.nameRepeated(nameField.getText())) {
                                 JOptionPane.showMessageDialog(null, "There is a subscription with the same name");
-                            }else{
+                            } else {
                                 aux = true;
-                            } 
-                        }else{
+                            }
+                        } else {
                             JOptionPane.showMessageDialog(null, "Duration not valid");
-                        }   
+                        }
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, "Price not valid");
                         return 27;
@@ -2263,14 +2252,14 @@ public class AppMenus {
                 JOptionPane.showMessageDialog(null, "Name not valid");
                 return 27;
             }
-            while(aux){
+            while (aux) {
                 if (op == JOptionPane.OK_OPTION) {
 
                     String name = nameField.getText();
                     double price = Double.parseDouble(priceField.getText());
                     String description = descriptionField.getText();
                     int duration = Integer.parseInt(durationField.getText());
-                    
+
                     int confirmResult = JOptionPane.showConfirmDialog(
                             null,
                             "Are you sure all the data you entered is correct?\n" +
@@ -2289,13 +2278,15 @@ public class AppMenus {
                         aux = false;
                         break;
                     }
-                        
-                }else {
+
+                } else {
                     break;
                 }
             }
-            if(aux){break;}
-            
+            if (aux) {
+                break;
+            }
+
         }
         return 25;
     }
@@ -2316,7 +2307,7 @@ public class AppMenus {
                     subsC.subsNames(),
                     null);
 
-            while(true){
+            while (true) {
                 if (selectedSubscription != null) {
                     subsC.findCurrentSubscription(selectedSubscription);
                     Subscription subTOUpdate = new Subscription(subsC.getCurrentSub().getName(),
@@ -2355,12 +2346,12 @@ public class AppMenus {
                                     if (durationField.getText().matches("\\d+")) {
                                         if (subsC.nameRepeatedForUpdate(subsC.getCurrentSub().getName(), nameField.getText())) {
                                             JOptionPane.showMessageDialog(null, "There is a subscription with the same name");
-                                        }else{
+                                        } else {
                                             aux = true;
-                                        } 
-                                    }else{
+                                        }
+                                    } else {
                                         JOptionPane.showMessageDialog(null, "Duration not valid");
-                                    }   
+                                    }
                                 } catch (NumberFormatException e) {
                                     JOptionPane.showMessageDialog(null, "Price not valid");
                                 }
@@ -2371,7 +2362,7 @@ public class AppMenus {
                             JOptionPane.showMessageDialog(null, "Name not valid");
                         }
 
-                        while(aux){
+                        while (aux) {
                             String newName = nameField.getText();
                             double newPrice = Double.parseDouble(priceField.getText());
                             String newDescription = descriptionField.getText();
@@ -2393,20 +2384,22 @@ public class AppMenus {
                                 JOptionPane.showMessageDialog(null, "The subscription was modified successfully!");
                                 break;
 
-                            }else{
+                            } else {
                                 aux = false;
                                 break;
                             }
                         }
-                    }else{
+                    } else {
                         break;
                     }
-                    if(aux){break;}
-                }else{
+                    if (aux) {
+                        break;
+                    }
+                } else {
                     break;
                 }
             }
-            
+
         }
         return 25;
     }
@@ -2464,7 +2457,7 @@ public class AppMenus {
         op = JOptionPane.showOptionDialog(null, "Welcome to your playlist", "PlayList Menu", JOptionPane.PLAIN_MESSAGE,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
-                new Object[] { "Your PlayList", "Create PlayList", "Update PlayList", "Remove PlayList", "Return" },
+                new Object[]{"Your PlayList", "Create PlayList", "Update PlayList", "Remove PlayList", "Return"},
                 null);
 
         LocalTime currentLocalTime = LocalTime.now(ZoneId.of("America/Bogota"));
@@ -2514,7 +2507,7 @@ public class AppMenus {
 
             op = JOptionPane.showOptionDialog(null, "PlayList: " + playListName, playListName + " Menu",
                     JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                    null, new Object[] { "Movies", "Series", "Choose other PlayList", "Return PlayList Menu" }, null);
+                    null, new Object[]{"Movies", "Series", "Choose other PlayList", "Return PlayList Menu"}, null);
 
             if (op == 0) {
                 if (playListC.getCurrentPlayList().getMovies().isEmpty()) {
@@ -2553,12 +2546,12 @@ public class AppMenus {
                     }
                     String[] aux = movieName.split("-");
                     op = JOptionPane.showOptionDialog(null, "Movie name: " + movieName +
-                            "\nDuration: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getDuration() +
-                            "\nDescription: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getDescription() +
-                            "\nAuthor: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getAuthor(),
+                                    "\nDuration: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getDuration() +
+                                    "\nDescription: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getDescription() +
+                                    "\nAuthor: " + userRegisteredC.getMovie(Integer.parseInt(aux[1])).getAuthor(),
                             "See Movie From PlayList Menu", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                            null, new Object[] { "Play Movie", "choose other movie", "choose other PlayList",
-                                    "Return to PlayList Menu" },
+                            null, new Object[]{"Play Movie", "choose other movie", "choose other PlayList",
+                                    "Return to PlayList Menu"},
                             null);
                     if (op == 0) {
                         if (userRegisteredC.getCurrentUser().getSub() == null) {
@@ -2624,7 +2617,7 @@ public class AppMenus {
                         op = JOptionPane.showOptionDialog(null, "Movie played!", null, JOptionPane.PLAIN_MESSAGE,
                                 JOptionPane.PLAIN_MESSAGE,
                                 null,
-                                new Object[] { "Play other movie", "Choose other PlayList", "Return to PlayList Menu" },
+                                new Object[]{"Play other movie", "Choose other PlayList", "Return to PlayList Menu"},
                                 null);
                         if (op == 1) {
                             return 31;
@@ -2673,18 +2666,18 @@ public class AppMenus {
                                 break;
                             }
                             op = JOptionPane.showOptionDialog(null, "Movie name: " + chapterName +
-                                    "\nDuration: "
-                                    + playListC.getPlayListChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
+                                            "\nDuration: "
+                                            + playListC.getPlayListChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                             .getDuration()
-                                    +
-                                    "\nDescription: "
-                                    + playListC.getPlayListChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
+                                            +
+                                            "\nDescription: "
+                                            + playListC.getPlayListChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                             .getDescription(),
                                     "See Movie From PlayList Menu", JOptionPane.PLAIN_MESSAGE,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null,
-                                    new Object[] { "Play Chapter", "choose other chapter", "choose other season",
-                                            "choose other serie", "choose other play list", "Return to PlayList Menu" },
+                                    new Object[]{"Play Chapter", "choose other chapter", "choose other season",
+                                            "choose other serie", "choose other play list", "Return to PlayList Menu"},
                                     null);
                             if (op == 0) {
                                 if (userRegisteredC.getCurrentUser().getSub() == null) {
@@ -2750,8 +2743,8 @@ public class AppMenus {
                                 frame.dispose();
                                 op = JOptionPane.showOptionDialog(null, "chapter played!", null,
                                         JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                        null, new Object[] { "Play other chapter", "Choose other season",
-                                                "Return to PlayList Menu" },
+                                        null, new Object[]{"Play other chapter", "Choose other season",
+                                                "Return to PlayList Menu"},
                                         null);
                                 if (op == 1) {
                                     break;
@@ -2804,7 +2797,7 @@ public class AppMenus {
         if (movies.length > 0 || series.length > 0) {
             op = JOptionPane.showOptionDialog(null, "Do you want to add a serie or movie?", "Create PlayList Menu",
                     JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                    null, new Object[] { "Yes", "No" }, null);
+                    null, new Object[]{"Yes", "No"}, null);
             if (op == 1) {
                 return 30;
             }
@@ -2836,7 +2829,7 @@ public class AppMenus {
                         op = JOptionPane.showOptionDialog(null, "Do you want to add another movie?",
                                 "Create PlayList Menu",
                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                null, new Object[] { "Yes", "No" }, null);
+                                null, new Object[]{"Yes", "No"}, null);
                         if (op == 1) {
                             break;
                         }
@@ -2875,7 +2868,7 @@ public class AppMenus {
                         op = JOptionPane.showOptionDialog(null, "Do you want to add another serie?",
                                 "Create PlayList Menu",
                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                null, new Object[] { "Yes", "No" }, null);
+                                null, new Object[]{"Yes", "No"}, null);
                         if (op == 1) {
                             break;
                         }
@@ -3014,7 +3007,7 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] {
+                    new Object[]{
                             "<html><font color='#A29F00'>Change name</font></html>",
                             "<html><font color='#FF0000'>Remove Movie Selected</font></html>",
                             "<html><font color='#0070FF'>Add Movie to PlayList</font></html>",
@@ -3030,10 +3023,10 @@ public class AppMenus {
             switch (optionResult) {
                 // Modifies the name of the play list
                 case 0:
-                    if(!nameField.getText().matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")){
+                    if (!nameField.getText().matches("^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$")) {
                         JOptionPane.showMessageDialog(null, "Name invalid");
                         break;
-                    }else if (playListC.nameRepeated(nameField.getText()) ) {
+                    } else if (playListC.nameRepeated(nameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Name already exists, try again.");
                         break;
                     } else {
@@ -3109,7 +3102,7 @@ public class AppMenus {
     public int categoryMenu(int op) {
         op = JOptionPane.showOptionDialog(null, "Choose an option to management the categories", "Category Menu",
                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                null, new Object[] { "See", "Create", "Update", "Remove", "Return" }, null);
+                null, new Object[]{"See", "Create", "Update", "Remove", "Return"}, null);
 
         switch (op) {
             case 0:
@@ -3181,7 +3174,7 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] { "See movie information", "See serie information", "return" },
+                    new Object[]{"See movie information", "See serie information", "return"},
                     null);
             if (op == 0) {
                 if (moviesCategory.length > 0) {
@@ -3216,7 +3209,7 @@ public class AppMenus {
         String categoryName;
         while (true) {
             categoryName = JOptionPane.showInputDialog(null, "Name of the new category:");
-            
+
             if (categoryName == null) {
                 return 35;
             } else if (categoryC.nameRepeated(categoryName)) {
@@ -3237,7 +3230,7 @@ public class AppMenus {
         if (movies.length > 0 || series.length > 0) {
             op = JOptionPane.showOptionDialog(null, "Do you want to add a serie or movie?", "Create Category Menu",
                     JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                    null, new Object[] { "Yes", "No" }, null);
+                    null, new Object[]{"Yes", "No"}, null);
             if (op == 1) {
                 return 35;
             }
@@ -3271,7 +3264,7 @@ public class AppMenus {
                         op = JOptionPane.showOptionDialog(null, "Do you want to add another movie?",
                                 "Create PlayList Menu",
                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                null, new Object[] { "Yes", "No" }, null);
+                                null, new Object[]{"Yes", "No"}, null);
                         if (op == 1) {
                             break;
                         }
@@ -3310,7 +3303,7 @@ public class AppMenus {
                         op = JOptionPane.showOptionDialog(null, "Do you want to add another serie?",
                                 "Create PlayList Menu",
                                 JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                                null, new Object[] { "Yes", "No" }, null);
+                                null, new Object[]{"Yes", "No"}, null);
                         if (op == 1) {
                             break;
                         }
@@ -3448,7 +3441,7 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] {
+                    new Object[]{
                             "<html><font color='#A29F00'>Change name</font></html>",
                             "<html><font color='#FF0000'>Remove Movie Selected</font></html>",
                             "<html><font color='#0070FF'>Add Movie to PlayList</font></html>",
@@ -3464,10 +3457,10 @@ public class AppMenus {
             switch (op) {
                 // Modifies the name of the play list
                 case 0:
-                    if(!nameField.getText().matches("^[a-zA-Z]+(\\s[a-zA-Z]+)*$")){
+                    if (!nameField.getText().matches("^[a-zA-Z]+(\\s[a-zA-Z]+)*$")) {
                         JOptionPane.showMessageDialog(null, "Name invalid");
                         break;
-                    }else if (categoryC.nameRepeated(nameField.getText())) {
+                    } else if (categoryC.nameRepeated(nameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Name already exists, try again.");
                         break;
                     } else {
@@ -3571,22 +3564,51 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] { "Subscribe", "Cancel Subscription", "return" },
+                    new Object[]{"Subscribe", "Cancel Subscription", "return"},
                     null);
 
             if (op == 0) {
                 subsC.findCurrentSubscription((String) subsAvailableBox.getSelectedItem());
                 if (userRegisteredC.getCurrentUser().getSub() == null) {
                     op = JOptionPane.showOptionDialog(null,
-                                        "Name: " + subsC.getCurrentSub().getName() +
-                                        "\nDescription: " + subsC.getCurrentSub().getDescription() + 
-                                        "\nPrice: " + subsC.getCurrentSub().getPrice() +  
-                                        "\nDuration: " + subsC.getCurrentSub().getDuration() + 
-                                        "\nAre you sure do you want to susbribe?", "Confirmation Menu",JOptionPane.PLAIN_MESSAGE,
-                                        JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Yes","No"}, null);
-                    if(op == 0){
+                            "Name: " + subsC.getCurrentSub().getName() +
+                                    "\nDescription: " + subsC.getCurrentSub().getDescription() +
+                                    "\nPrice: " + subsC.getCurrentSub().getPrice() +
+                                    "\nDuration: " + subsC.getCurrentSub().getDuration() +
+                                    "\nAre you sure do you want to susbribe?", "Confirmation Menu", JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Yes", "No"}, null);
+                    if (op == 0) {
                         subsC.addSubToUser(subsC.getCurrentSub(), userRegisteredC.getCurrentUser());
                         JOptionPane.showMessageDialog(null, "Subscription added successfully");
+                        int opc2 = JOptionPane.showOptionDialog(null, "You want to save the invoice", "Invoice Menu",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Yes", "No"},
+                                null);
+                        if (opc2 == 0) {
+                            LocalDateTime now = LocalDateTime.now();
+                            String downloadsPath = Paths.get(System.getProperty("user.home"), "Downloads").toString();
+                            String formatted = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                            File file = new File(String.format("%s%s%s%s", downloadsPath, "/invoice", formatted, ".txt"));
+                            try (BufferedWriter bf = new BufferedWriter(new FileWriter(file))) {
+                                UserRegistered user = userRegisteredC.getCurrentUser();
+                                bf.write("Date and Time: " + now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+                                bf.write("\n" + "=".repeat(30));
+
+                                bf.write("\nUser: " + user.getFirstName() + " " + user.getLastName());
+                                bf.write("\nUsername: " + user.getUser());
+                                bf.write("\n" + "=".repeat(30));
+
+                                bf.write("\nSubscription Details");
+                                bf.write("\nName: " + subsC.getCurrentSub().getName());
+                                bf.write("\nDescription: " + subsC.getCurrentSub().getDescription());
+                                bf.write("\nPrice: " + subsC.getCurrentSub().getPrice());
+                                bf.write("\nDuration: " + subsC.getCurrentSub().getDuration());
+                                bf.flush();
+
+                                JOptionPane.showMessageDialog(null, "The invoice has been downloaded successfully");
+                            } catch (IOException e) {
+                                JOptionPane.showMessageDialog(null, "An error has occurred: " + e.getMessage());
+                            }
+                        }
                     }
                 }
             } else if (op == 1) {
@@ -3652,7 +3674,7 @@ public class AppMenus {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new Object[] { "See movie", "See serie", "return" },
+                    new Object[]{"See movie", "See serie", "return"},
                     null);
             if (op == 0) {
                 if (moviesCategory.length > 0) {
@@ -3729,7 +3751,7 @@ public class AppMenus {
                     op = JOptionPane.showOptionDialog(null, "Movie played!", null, JOptionPane.PLAIN_MESSAGE,
                             JOptionPane.PLAIN_MESSAGE,
                             null,
-                            new Object[] { "Choose other movie", "Return" },
+                            new Object[]{"Choose other movie", "Return"},
                             null);
                     if (op == 1) {
                         return 20;
@@ -3745,7 +3767,7 @@ public class AppMenus {
                                     + userRegisteredC.getSerie(Integer.parseInt(aux[1])).getDescription() +
                                     "\nAuthor: " + userRegisteredC.getSerie(Integer.parseInt(aux[1])).getAuthor(),
                             "See Movie ", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
-                            null, new Object[] { "See Seasons", "choose other serie" },
+                            null, new Object[]{"See Seasons", "choose other serie"},
                             null);
 
                     if (op == 0) {
@@ -3773,19 +3795,19 @@ public class AppMenus {
                                     break;
                                 }
                                 op = JOptionPane.showOptionDialog(null, "Chapter name: " + chapterName +
-                                        "\nDuration: "
-                                        + userRegisteredC
+                                                "\nDuration: "
+                                                + userRegisteredC
                                                 .getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                                 .getDuration()
-                                        + "\nDescription: "
-                                        + userRegisteredC
+                                                + "\nDescription: "
+                                                + userRegisteredC
                                                 .getSerieChapter(Integer.parseInt(aux[1]), seasonName, chapterName)
                                                 .getDescription(),
                                         "See Movie ", JOptionPane.PLAIN_MESSAGE,
                                         JOptionPane.PLAIN_MESSAGE,
                                         null,
-                                        new Object[] { "Play Chapter", "choose other chapter", "choose other season",
-                                                "choose other serie" },
+                                        new Object[]{"Play Chapter", "choose other chapter", "choose other season",
+                                                "choose other serie"},
                                         null);
 
                                 if (op == 0) {
@@ -3854,8 +3876,8 @@ public class AppMenus {
                                     op = JOptionPane.showOptionDialog(null, "chapter played!", null,
                                             JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE,
                                             null,
-                                            new Object[] { "Play other chapter", "choose other serie",
-                                                    "Choose other season" },
+                                            new Object[]{"Play other chapter", "choose other serie",
+                                                    "Choose other season"},
                                             null);
 
                                     if (op == 1) {

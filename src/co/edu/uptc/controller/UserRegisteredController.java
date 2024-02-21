@@ -9,9 +9,9 @@ import co.edu.uptc.model.MultimediaContent;
 import co.edu.uptc.model.Season;
 import co.edu.uptc.model.Serie;
 import co.edu.uptc.model.UserRegistered;
-import co.edu.uptc.persistence.managerClasses.MoviesManagement;
-import co.edu.uptc.persistence.managerClasses.SeriesManagement;
-import co.edu.uptc.persistence.managerClasses.UserRegisteredManagement;
+import co.edu.uptc.util.MoviesManagement;
+import co.edu.uptc.util.SeriesManagement;
+import co.edu.uptc.util.UserRegisteredManagement;
 
 public class UserRegisteredController {
 

@@ -7,9 +7,8 @@ import co.edu.uptc.model.Movie;
 import co.edu.uptc.model.MultimediaContent;
 import co.edu.uptc.model.Season;
 import co.edu.uptc.model.Serie;
-import co.edu.uptc.persistence.managerClasses.MoviesManagement;
-//import co.edu.uptc.persistence.managerClasses.SeriesManagement;
-import co.edu.uptc.persistence.managerClasses.SeriesManagement;
+import co.edu.uptc.util.MoviesManagement;
+import co.edu.uptc.util.SeriesManagement;
 
 public class AdminController {
     private MoviesManagement moviesManager = new MoviesManagement();
