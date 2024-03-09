@@ -1,0 +1,7 @@
+.panel {
+    -fx-background-color: #6d8bdcdb;
+    -fx-padding: 10px;
+    -fx-border-width: 5px;
+    -fx-border-color: #6054e4;
+    -fx-margin: 15px;
+}
