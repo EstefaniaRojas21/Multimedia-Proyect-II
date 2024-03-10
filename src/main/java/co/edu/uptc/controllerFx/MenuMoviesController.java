@@ -1,5 +1,6 @@
 package co.edu.uptc.controllerFx;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import co.edu.uptc.Run;
 import co.edu.uptc.controller.UserRegisteredController;
 import co.edu.uptc.model.Movie;
 import co.edu.uptc.model.UserRegistered;
@@ -36,14 +38,12 @@ public class MenuMoviesController implements Initializable{
     private Button btnReturn;
 
     @FXML
-    void Select(ActionEvent event) {
+    void Select(ActionEvent event) throws IOException {
 
+        Run.setRoot("Movie");
     }
-
-    
+   
     MoviesManagement movies = new MoviesManagement();
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,8 +59,6 @@ public class MenuMoviesController implements Initializable{
             // }
 
             ArrayList<String> movieNames = new ArrayList<>();
-            
-            // Obtener los nombres de las películas
             for (Movie movie : listMovies) {
                 movieNames.add(movie.getName());
             }
@@ -68,21 +66,6 @@ public class MenuMoviesController implements Initializable{
             ObservableList<String> movieNamesList = FXCollections.observableArrayList(movieNames);
             movieComboBox.setItems(movieNamesList);
 
-            // Crear el diálogo de selección de película
-            // ChoiceDialog<String> dialog = new ChoiceDialog<>(movieNamesList.get(0), movieNamesList);
-            // dialog.setTitle("User Movies Menu");
-            // dialog.setHeaderText(null);
-            // dialog.setContentText("Choose a movie:");
-
-            // // Mostrar el diálogo y obtener la película seleccionada
-            // Optional<String> result = dialog.showAndWait();
-            // if (result.isPresent()) {
-            //     String selectedMovieName = result.get();
-            //     // Realizar acciones con la película seleccionada
-            //     System.out.println("Selected movie: " + selectedMovieName);
-            // } else {
-            //     System.out.println("Window closed");
-            // }
 
         }
     }
