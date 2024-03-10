@@ -1,14 +1,21 @@
 package co.edu.uptc.controllerFx;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.scene.Node;
+import co.edu.uptc.Run;
 import co.edu.uptc.controller.UserRegisteredController;
+import co.edu.uptc.model.Movie;
 import co.edu.uptc.model.UserRegistered;
+import co.edu.uptc.util.MoviesManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -16,7 +23,7 @@ public class menuLoginController {
 
     private Stage primaryStage;
     
-    UserRegisteredController urc = new UserRegisteredController();
+    MoviesManagement movies = new MoviesManagement();
 
 
     @FXML
@@ -34,27 +41,28 @@ public class menuLoginController {
     @FXML
     private Button btnSeries;
 
+    
+
     @FXML
-    private void listMovies(ActionEvent event) {
-        showMovies();
-    }
+    private void listMovies(ActionEvent event) throws IOException {
+        System.out.println("listMovies method called");
 
-    // Otros métodos aquí...
-
-    private void showMovies() {
+       ArrayList<Movie> listMovies = movies.getMovies();
         
-        String[] movieNames = urc.getMovieNames();
-
-        if (movieNames.length == 0) {
-            // Mostrar un mensaje indicando que no hay películas disponibles
-            // Puedes usar una ventana de diálogo o cualquier otro mecanismo de notificación
+        if (listMovies.size() == 0) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("User Movies Menu");
+            alert.setHeaderText(null);
+            alert.setContentText("There are not movies available");
+            alert.showAndWait();
             return;
+        }else {
+            Run.setRoot("MenuMovies");
         }
 
-        // Lógica para mostrar una tabla con todas las películas
-        // Por ejemplo, podrías abrir una nueva ventana con la tabla de películas
-        // y mostrar el listado de películas en ella
+        
     }
+
 
     @FXML
     private void listCategories(ActionEvent event) {

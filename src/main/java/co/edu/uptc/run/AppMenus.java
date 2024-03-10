@@ -6,6 +6,8 @@ import co.edu.uptc.util.CategoryManagement;
 import co.edu.uptc.util.MoviesManagement;
 import co.edu.uptc.util.SeriesManagement;
 import co.edu.uptc.util.UserRegisteredManagement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -1015,6 +1017,7 @@ public class AppMenus {
     // -----------------------------Movies-------------------------------
 
     // Menu(21)
+
 
     public int ShowMovies(int op) {
         String[] movieNames = userRegisteredC.getMovieNames();
