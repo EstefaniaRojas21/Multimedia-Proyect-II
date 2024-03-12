@@ -101,4 +101,9 @@ public class LoginController implements Initializable {
     void Select(ActionEvent event) {
         //Crear una cuenta
     }
+
+    @FXML
+    void Return(ActionEvent event) throws IOException {
+        Run.setRoot("Start");
+    }
 }

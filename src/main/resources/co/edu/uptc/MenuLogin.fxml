@@ -39,7 +39,7 @@
             <Image url="@imgLogin/7.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnReturn" layoutX="509.0" layoutY="291.0" mnemonicParsing="false" onAction="#Return" prefHeight="34.0" prefWidth="77.0" text="Return">
+      <Button fx:id="btnReturn" layoutX="262.0" layoutY="257.0" mnemonicParsing="false" onAction="#Return" prefHeight="34.0" prefWidth="77.0" text="Return">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>

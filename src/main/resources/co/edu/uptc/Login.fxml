@@ -54,7 +54,7 @@
             </TilePane>
          </left>
       </BorderPane>
-      <Button fx:id="btnReturn" layoutX="443.0" layoutY="26.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="72.0" text="Return">
+      <Button fx:id="btnReturn" layoutX="353.0" layoutY="32.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="72.0" text="Return">
          <font>
             <Font name="Bodoni MT Condensed" size="18.0" />
          </font>
