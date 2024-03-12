@@ -76,7 +76,16 @@ public class MoviesManagement {
         return moviesArray;
     }
 
+    public Movie GuardarPelicula(String nombre) {
+        ArrayList<Movie> movies = getMovies(); // Obtener la lista de películas
     
+        for (Movie movie : movies) {
+            if (movie.getName().equals(nombre)) {
+                return movie;
+            }
+        }
+        return null;
+    }
     
 
     public void updateMovie(Movie movieToUpdate, Movie movieUpdated) {
