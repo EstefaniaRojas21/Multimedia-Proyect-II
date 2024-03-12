@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,23 +29,26 @@ public class LoginController implements Initializable {
     private Stage primaryStage;
 
     @FXML
-    private TextField username;
+    private Button btnLogin;
+
+    @FXML
+    private Label btnRegister;
+
+    @FXML
+    private Button btnReturn;
 
     @FXML
     private PasswordField password;
 
     @FXML
-    private Button btnLogin;
+    private TextField username;
 
     @FXML
     public void Login(ActionEvent event) throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
-        System.out.println("1");
         if (login(username, password)) {
-            System.out.println("2");
             showMainMenu(event);
-            System.out.println("3");
         }
     }
 
@@ -55,7 +59,6 @@ public class LoginController implements Initializable {
         if (userRegisteredC.userFound(username)) {
             if (userRegisteredC.getCurrentUser().couldLogIn(username, password)) {
                 if (userRegisteredC.getCurrentUser().getPassword().equals(password)) {
-                    System.out.println("Bienvenido usuario registrado");
                     return true;
                 } else {
                     showAlert("User Registered password incorrect");
@@ -65,7 +68,6 @@ public class LoginController implements Initializable {
         } else if (admin.couldLogIn(username, password)) {
             
             if (admin.getPassword().equals(password)) {
-                System.out.println("Bienvenido admin");
                 return true;
             } else {
                 showAlert("Admin password incorrect");
@@ -85,7 +87,6 @@ public class LoginController implements Initializable {
     }
 
     public void showMainMenu(ActionEvent event) throws IOException {
-        System.out.println("showMainMenu method called");
 
         Run.setRoot("MenuLogin");
 
@@ -94,5 +95,10 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+    }
+
+    @FXML
+    void Select(ActionEvent event) {
+        //Crear una cuenta
     }
 }

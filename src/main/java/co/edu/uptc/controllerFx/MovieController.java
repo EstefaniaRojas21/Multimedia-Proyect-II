@@ -1,9 +1,12 @@
 package co.edu.uptc.controllerFx;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import co.edu.uptc.Run;
+import co.edu.uptc.controller.UserRegisteredController;
 import co.edu.uptc.model.Movie;
 import co.edu.uptc.util.MoviesManagement;
 import javafx.collections.FXCollections;
@@ -37,39 +40,40 @@ public class MovieController implements Initializable{
     @FXML
     private Label lblNombre;
 
-    MoviesManagement movies = new MoviesManagement();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        MoviesManagement movies = new MoviesManagement();
         ArrayList<Movie> listMovies = movies.getMovies();
-        ArrayList<String> movieNames = new ArrayList<>();
+        UserRegisteredController userRC = new UserRegisteredController();
+        userRC.setMovies(listMovies);
 
-        if (!listMovies.isEmpty()) {
-            // Obtener la primera película en la lista
-            Movie firstMovie = listMovies.get(0);
-            // Establecer los valores de las etiquetas con los detalles de la primera película
-            lblNombre.setText(firstMovie.getName());
-            lblAutor.setText(firstMovie.getAuthor());
-            lblDesc.setText(firstMovie.getDescription());
-            lblDurat.setText(String.valueOf(firstMovie.getDuration()));
-        }
-    }
-    
+        String a = Prueba.getInstance().nombreMov();
+        
+        Movie movieselected = userRC.GuardarPelicula(Prueba.getInstance().nombreMov());
 
-    @FXML
-    void OtherMovie(ActionEvent event) {
+        // Movie firstMovie = userRC.GuardarPelicula(Prueba.getInstance().nombreMov());
 
+            lblNombre.setText(movieselected.getName());
+            lblAutor.setText(movieselected.getAuthor());
+            lblDesc.setText(movieselected.getDescription());
+            lblDurat.setText(String.valueOf(movieselected.getDuration()));
     }
 
     @FXML
-    void Play(ActionEvent event) {
-
+    void OtherMovie(ActionEvent event) throws IOException {
+        Run.setRoot("MenuMovies");
     }
 
     @FXML
-    void Return(ActionEvent event) {
+    void Play(ActionEvent event) throws IOException {
+        Run.setRoot("PlayMovie");
+    }
 
+    @FXML
+    void Return(ActionEvent event) throws IOException {
+        Run.setRoot("MenuMovies");
     }
 
 }

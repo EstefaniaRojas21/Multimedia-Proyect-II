@@ -20,7 +20,7 @@
             <Font name="Bodoni MT Condensed" size="34.0" />
          </font>
       </Label>
-      <Button fx:id="btnReturn" layoutX="402.0" layoutY="272.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Return">
+      <Button fx:id="btnReturn" layoutX="402.0" layoutY="272.0" mnemonicParsing="false" onAction="#Return" prefHeight="31.0" prefWidth="85.0" text="Return">
          <font>
             <Font name="Bodoni MT Condensed" size="17.0" />
          </font>
@@ -31,5 +31,10 @@
             <Image url="@imgLogin/intento2.jpg" />
          </image>
       </ImageView>
+      <Button fx:id="btnAceptar" layoutX="362.0" layoutY="96.0" mnemonicParsing="false" onAction="#SelectionMovie" prefHeight="33.0" prefWidth="136.0" text="Aceptar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="17.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

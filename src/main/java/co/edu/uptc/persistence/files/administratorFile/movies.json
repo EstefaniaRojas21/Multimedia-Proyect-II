@@ -1,1 +1,1 @@
-{"movies":[{"movie":{"id":62,"name":"Iron Man","author":"Stan Lee","description":"Super heroe","duration":200}},{"movie":{"id":559,"name":"Spider man","author":"Stan Lee","description":"Super heroes","duration":250}}]}
+{"movies":[{"movie":{"id":62,"name":"Iron Man","author":"Stan Lee","description":"Super heroe","duration":200, "URLVideo": "/co/edu/uptc/imgLogin/video.mp4"}},{"movie":{"id":559,"name":"Spider man","author":"Stan Lee","description":"Super heroes","duration":250, "URLVideo": "/co/edu/uptc/imgLogin/video.mp4"}}]}

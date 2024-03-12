@@ -7,8 +7,10 @@ import javafx.scene.Node;
 import co.edu.uptc.Run;
 import co.edu.uptc.controller.UserRegisteredController;
 import co.edu.uptc.model.Movie;
+import co.edu.uptc.model.Serie;
 import co.edu.uptc.model.UserRegistered;
 import co.edu.uptc.util.MoviesManagement;
+import co.edu.uptc.util.SeriesManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,7 @@ public class menuLoginController {
     private Stage primaryStage;
     
     MoviesManagement movies = new MoviesManagement();
+    SeriesManagement series = new SeriesManagement();
 
 
     @FXML
@@ -45,8 +48,7 @@ public class menuLoginController {
 
     @FXML
     private void listMovies(ActionEvent event) throws IOException {
-        System.out.println("listMovies method called");
-
+        
        ArrayList<Movie> listMovies = movies.getMovies();
         
         if (listMovies.size() == 0) {
@@ -75,14 +77,25 @@ public class menuLoginController {
     }
 
     @FXML
-    private void Return(ActionEvent event) {
-        // Lógica para manejar el clic en el botón de regreso
+    private void Return(ActionEvent event) throws IOException {
+        Run.setRoot("Login");
     }
 
     @FXML
-    private void listSeries(ActionEvent event) {
-        // Lógica para manejar el clic en el botón de series
-    }
+    private void listSeries(ActionEvent event) throws IOException {
+
+        ArrayList<Serie> listSeries = series.getSeries();
+         
+         if (listSeries.size() == 0) {
+             Alert alert = new Alert(AlertType.INFORMATION);
+             alert.setTitle("User Series Menu");
+             alert.setHeaderText(null);
+             alert.setContentText("There are not series available");
+             alert.showAndWait();
+             return;
+         }else {
+             Run.setRoot("MenuSeries");
+         }    }
 
     
 }

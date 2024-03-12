@@ -47,6 +47,8 @@ public class MoviesManagement {
         }
     }
 
+    
+
     public ArrayList<Movie> getMovies() {
         ArrayList<Movie> moviesArray = new ArrayList<>();
         @SuppressWarnings("deprecation")
@@ -73,6 +75,9 @@ public class MoviesManagement {
         }
         return moviesArray;
     }
+
+    
+    
 
     public void updateMovie(Movie movieToUpdate, Movie movieUpdated) {
         JsonObject atributesMovieToUpdate = new JsonObject();

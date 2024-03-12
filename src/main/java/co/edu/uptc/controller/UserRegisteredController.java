@@ -94,44 +94,7 @@ public class UserRegisteredController {
         }
         return rta;
     }
-
-    
-
-    public void playMovie(int duracionMilisegundos, String movieName) {
-        //Estefania//
-        // Reproducir película//
-        // String name = "";//
-        // MultimediaContent mc = new MultimediaContent(name);//
-
-        //controller classes dont use outputs. ¡To FIX!
-        System.out.println("Reproduciendo la película " + movieName + "...");
-        try {
-            Thread.sleep(duracionMilisegundos);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Película Finalizada");
-        
-    }
-
-    
-
-    
-
-    public void playSerie(int duracionMilisegundos, String serieName) {
-        //Commentaried code from: Estefania//
-        // Reproducir Serie//
-        // int seasons = 0;//
-        // Serie sp = new Serie(name, null);//
-        System.out.println("Reproduciendo la serie " + serieName + "...");
-        try {
-            Thread.sleep(duracionMilisegundos);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Serie Finalizada");
-
-    }
+  
 
     // Buscar película
     public String[] getMovieNames() {
@@ -248,14 +211,21 @@ public class UserRegisteredController {
         return null;
     }
     
-
-
-   
-
+    public Movie GuardarPelicula(String nombre) {
+        ArrayList<Movie> movies = getMovies(); // Obtener la lista de películas
+    
+        for (Movie movie : movies) {
+            if (movie.getName().equals(nombre)) {
+                return movie;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<Movie> getMovies() {
         return movies;
     }
+
 
     public ArrayList<Serie> getSeries() {
         return series;

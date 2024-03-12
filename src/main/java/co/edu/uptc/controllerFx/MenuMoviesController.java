@@ -21,6 +21,7 @@ import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,41 +34,101 @@ public class MenuMoviesController implements Initializable{
 
     @FXML
     private ComboBox<String> movieComboBox;
+    
+    @FXML
+    private Button btnAceptar;
+
+    public int index;    
 
     @FXML
     private Button btnReturn;
 
-    @FXML
-    void Select(ActionEvent event) throws IOException {
 
-        Run.setRoot("Movie");
+    @FXML
+    void Return(ActionEvent event) throws IOException {
+        Run.setRoot("MenuLogin");
     }
+
    
     MoviesManagement movies = new MoviesManagement();
 
+    int selectionCount = 0; // Variable para contar las selecciones
+
+    @FXML
+    private void Select(ActionEvent event) throws IOException {
+        if (selectionCount == 0) {
+            return;
+        } 
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ArrayList<Movie> listMovies = movies.getMovies();
+        ArrayList<String> movieNames = new ArrayList<>();
 
-       ArrayList<Movie> listMovies = movies.getMovies();
-    
-            // LocalTime currentLocalTime = LocalTime.now(ZoneId.of("America/Bogota"));
-            // if (userRegisteredC.getCurrentUser().getSub() != null) {
-            //     if (currentLocalTime.toNanoOfDay() / 1_000_000 >= userRegisteredC.getCurrentUser().getSub()
-            //             .getEndTime()) {
-            //         userRegisteredC.getCurrentUser().setSub(null);
-            //     }
-            // }
-
-            ArrayList<String> movieNames = new ArrayList<>();
-            for (Movie movie : listMovies) {
-                movieNames.add(movie.getName());
-            }
-
-            ObservableList<String> movieNamesList = FXCollections.observableArrayList(movieNames);
-            movieComboBox.setItems(movieNamesList);
-
-
+        for (Movie movie : listMovies) {
+            movieNames.add(movie.getName());
         }
+
+        ObservableList<String> movieNamesList = FXCollections.observableArrayList(movieNames);
+        movieComboBox.setItems(movieNamesList);
+
+        movieComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectionCount++; // Incrementar el contador de selecciones
+            if (selectionCount == 1) {
+                // Seleccionado por primera vez
+                Prueba.getInstance().GuardarPelicula(newValue);        
+            }
+        });
+    }
+
+    @FXML
+    void SelectionMovie(ActionEvent event) throws IOException {
+        Run.setRoot("Movie");
+    }
+
+
+    public ComboBox<String> getMovieComboBox() {
+        return this.movieComboBox;
+    }
+
+    public void setMovieComboBox(ComboBox<String> movieComboBox) {
+        this.movieComboBox = movieComboBox;
+    }
+
+    public UserRegisteredController getUserRegisteredC() {
+        return userRegisteredC;
+    }
+
+    public void setUserRegisteredC(UserRegisteredController userRegisteredC) {
+        this.userRegisteredC = userRegisteredC;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public Button getBtnReturn() {
+        return btnReturn;
+    }
+
+    public void setBtnReturn(Button btnReturn) {
+        this.btnReturn = btnReturn;
+    }
+
+    public MoviesManagement getMovies() {
+        return movies;
+    }
+
+    public void setMovies(MoviesManagement movies) {
+        this.movies = movies;
+    }
+
+
     }
 
 
