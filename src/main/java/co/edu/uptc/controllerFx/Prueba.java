@@ -10,7 +10,6 @@ public class Prueba {
 
     
         public Prueba() {
-            // constructor privado
         }
     
         public static Prueba getInstance() {
@@ -27,6 +26,14 @@ public class Prueba {
         public String nombreMov(){
             return nombre;
         } 
+
+        public void GuardarSerie (String nombre){
+            this.nombre = nombre;
+        }
+
+        public String nombreSer(){
+            return nombre;
+        }
     
 
 }

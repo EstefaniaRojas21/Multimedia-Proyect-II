@@ -222,6 +222,18 @@ public class UserRegisteredController {
         return null;
     }
 
+    public Serie GuardarSerie(String nombre) {
+        ArrayList<Serie> series = getSeries(); // Obtener la lista de películas
+    
+        for (Serie serie : series) {
+            if (serie.getName().equals(nombre)) {
+                return serie;
+            }
+        }
+        return null;
+    }
+
+
     public ArrayList<Movie> getMovies() {
         return movies;
     }

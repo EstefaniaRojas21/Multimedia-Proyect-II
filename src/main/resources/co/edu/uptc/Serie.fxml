@@ -7,21 +7,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uptc.controllerFx.MovieController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uptc.controllerFx.SerieController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imgLogin/5.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnPlay" layoutX="362.0" layoutY="126.0" mnemonicParsing="false" onAction="#Play" prefHeight="25.0" prefWidth="146.0" style="-fx-background-color: 0C0B0B;" text="PLAY MOVIE">
+      <Button fx:id="btnPlay" layoutX="362.0" layoutY="126.0" mnemonicParsing="false" onAction="#Play" prefHeight="25.0" prefWidth="146.0" style="-fx-background-color: 0C0B0B;" text="PLAY SERIE">
          <font>
             <Font name="Bernard MT Condensed" size="22.0" />
          </font>
       </Button>
       <Button fx:id="btnReturn" layoutX="258.0" layoutY="261.0" mnemonicParsing="false" onAction="#Return" prefHeight="25.0" prefWidth="85.0" text="Return" />
-      <Button fx:id="btnOtherMov" layoutX="49.0" layoutY="261.0" mnemonicParsing="false" onAction="#OtherMovie" prefHeight="25.0" prefWidth="146.0" text="Choose other movie" />
+      <Button fx:id="btnOtherSer" layoutX="49.0" layoutY="261.0" mnemonicParsing="false" onAction="#OtherSerie" prefHeight="25.0" prefWidth="146.0" text="Choose other serie" />
       <ImageView fitHeight="251.0" fitWidth="323.0" layoutX="34.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imgLogin/Movie1.jpg" />
@@ -32,12 +31,12 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblAutor" layoutX="161.0" layoutY="134.0" prefHeight="16.0" prefWidth="69.0" textFill="WHITE">
+      <Label fx:id="lblAutor" layoutX="161.0" layoutY="134.0" prefHeight="21.0" prefWidth="171.0" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblDesc" layoutX="110.0" layoutY="158.0" prefHeight="21.0" prefWidth="85.0" textFill="WHITE">
+      <Label fx:id="lblDesc" layoutX="110.0" layoutY="158.0" prefHeight="21.0" prefWidth="220.0" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

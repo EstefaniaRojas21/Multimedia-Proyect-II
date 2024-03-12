@@ -25,11 +25,16 @@
             <Font name="Bodoni MT Condensed" size="17.0" />
          </font>
       </Button>
-      <ComboBox fx:id="movieComboBox" layoutX="68.0" layoutY="100.0" onAction="#Select" prefHeight="25.0" prefWidth="283.0" />
+      <ComboBox fx:id="serieComboBox" layoutX="68.0" layoutY="100.0" onAction="#Select" prefHeight="25.0" prefWidth="283.0" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="123.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imgLogin/intento2.jpg" />
          </image>
       </ImageView>
+      <Button fx:id="btnAceptar" layoutX="362.0" layoutY="96.0" mnemonicParsing="false" onAction="#SelectionMovie" prefHeight="33.0" prefWidth="136.0" text="Aceptar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="17.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

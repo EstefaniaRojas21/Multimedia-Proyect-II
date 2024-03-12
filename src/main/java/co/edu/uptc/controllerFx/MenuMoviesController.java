@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import co.edu.uptc.Run;
 import co.edu.uptc.controller.UserRegisteredController;
 import co.edu.uptc.model.Movie;
@@ -37,8 +35,7 @@ public class MenuMoviesController implements Initializable{
     
     @FXML
     private Button btnAceptar;
-
-    public int index;    
+  
 
     @FXML
     private Button btnReturn;
@@ -51,7 +48,6 @@ public class MenuMoviesController implements Initializable{
 
    
     MoviesManagement movies = new MoviesManagement();
-
     int selectionCount = 0; // Variable para contar las selecciones
 
     @FXML
@@ -87,46 +83,6 @@ public class MenuMoviesController implements Initializable{
         Run.setRoot("Movie");
     }
 
-
-    public ComboBox<String> getMovieComboBox() {
-        return this.movieComboBox;
-    }
-
-    public void setMovieComboBox(ComboBox<String> movieComboBox) {
-        this.movieComboBox = movieComboBox;
-    }
-
-    public UserRegisteredController getUserRegisteredC() {
-        return userRegisteredC;
-    }
-
-    public void setUserRegisteredC(UserRegisteredController userRegisteredC) {
-        this.userRegisteredC = userRegisteredC;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public Button getBtnReturn() {
-        return btnReturn;
-    }
-
-    public void setBtnReturn(Button btnReturn) {
-        this.btnReturn = btnReturn;
-    }
-
-    public MoviesManagement getMovies() {
-        return movies;
-    }
-
-    public void setMovies(MoviesManagement movies) {
-        this.movies = movies;
-    }
 
 
     }
