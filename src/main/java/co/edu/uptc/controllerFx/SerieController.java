@@ -23,7 +23,7 @@ public class SerieController implements Initializable{
     private Button btnOtherSer;
 
     @FXML
-    private Button btnPlay;
+    private Button btnSeeSeasons;
 
     @FXML
     private Button btnReturn;
@@ -64,7 +64,7 @@ public class SerieController implements Initializable{
     }
 
     @FXML
-    void Play(ActionEvent event) {
+    void SeeSeason(ActionEvent event) {
 
     }
 

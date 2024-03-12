@@ -34,6 +34,14 @@ public class Prueba {
         public String nombreSer(){
             return nombre;
         }
+
+        public void GuardarSeason (String nombre){
+            this.nombre = nombre;
+        }
+
+        public String nombreSeason(){
+            return nombre;
+        }
     
 
 }
